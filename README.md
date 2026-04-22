@@ -1,8 +1,12 @@
-![Banner](YOUR_BANNER_IMAGE_LINK_HERE)
+---
 
-# Data Mining Project (YouTube)
+![Banner](https://i.pinimg.com/originals/c3/56/2a/c3562aea7f427a4537cea6375abb97cd.png)
 
-A compact showcase of a full YouTube text mining workflow built through course labs and then extended into a final project structure.
+---
+
+# Data Mining Project (YouTube Insights)
+
+A compact showcase of a full YouTube text mining workflow built through step by step single different tasks and then extended into a final project structure.
 
 ## Overview
 
@@ -12,12 +16,12 @@ The project is organized as a practical learning repository: it includes complet
 
 ## What This Repository Contains
 
-- **Project instruction manual** covering the full end-to-end workflow and final project direction.
-- **Task-by-task lab work** organized around the main stages of the project.
-- **Implemented code files** for the core data mining tasks completed across the labs.
-- **Reports / outputs for each task** to help readers understand the process and results.
-- **Extra lab materials and toolkit resources** to support planning, scope control, and project presentation.
-- **Validation materials** for practicing concepts and checking understanding based on the completed work.
+- **Project instruction manual:** covering the full end-to-end workflow and final project direction.
+- **Task-by-task lab work:** organized around the main stages of the project.
+- **Implemented code files:** for the core data mining tasks completed across the labs.
+- **Reports / outputs for each task:** to help readers understand the process and results.
+- **Output plots:** to help understand the outcome plots.
+- **Validation materials:** for practicing concepts and checking understanding based on the completed work.
 
 ## Project Workflow
 
@@ -41,16 +45,10 @@ The repository follows a step-by-step pipeline:
 - TF-IDF vectorization
 - K-Means and DBSCAN clustering
 - Keyword, bigram, and sentiment comparison
-- Final project planning and validation practice
+- Final project implementing and validation practice
 
 ## Purpose of This Repository
 
-This repository is mainly a **showcase + learning resource**. It is intended to help others see how a complete YouTube-based data mining project can be built step by step, from early lab tasks to a final structured project. It can also be used for practice, revision, and reference while working on similar text mining tasks.
-
-## Note
-
-A key idea throughout this project is that **good preprocessing drives reliable analysis**. The later tasks depend heavily on the cleaned datasets produced earlier in the workflow.
+This repository is mainly a **showcase + learning resource**. It is intended to help others see how a complete YouTube-based data mining project can be built step by step. It can also be used for practice, revision, and reference while working on similar text mining tasks.
 
 ---
-
-If you use this repository as a reference, treat it as a guided example of the workflow and adapt the code, structure, and analysis to your own dataset and project needs.
