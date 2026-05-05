@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Staircase | Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .canvas-container {
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-800">
+
+    <nav class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">🪜</span>
+                    <span class="font-bold text-xl tracking-wide">Research Staircase</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="bg-slate-800 text-white px-3 py-2 rounded-md text-sm font-medium border-b-2 border-indigo-500">Dashboard</a>
+                        <a href="01_deconstruct.html" class="hover:bg-slate-700 text-gray-300 px-3 py-2 rounded-md text-sm font-medium">Phase 1: Deconstruct</a>
+                        <a href="02_evaluate.html" class="hover:bg-slate-700 text-gray-300 px-3 py-2 rounded-md text-sm font-medium">Phase 2: Evaluate</a>
+                        <a href="03_synthesize.html" class="hover:bg-slate-700 text-gray-300 px-3 py-2 rounded-md text-sm font-medium">Phase 3: Synthesize</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-extrabold text-slate-900 mb-4">The AI-Assisted Research Workflow</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                A 10-step structured approach to reading, understanding, and extending Computer Science research papers using LLMs.
+            </p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md p-6 mb-12 border-l-4 border-indigo-600">
+            <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center">
+                <span class="bg-indigo-100 text-indigo-700 p-2 rounded-lg mr-3">Step 0</span> 
+                Set Context
+            </h2>
+            <p class="text-gray-600 mb-6">Enter the details of the paper you are analyzing. These will automatically populate the prompts in the next phases.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Paper Title</label>
+                    <input type="text" id="paperTitle" placeholder="e.g., Attention Is All You Need" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Research Domain</label>
+                    <input type="text" id="paperDomain" placeholder="e.g., Natural Language Processing" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button onclick="saveContext()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg shadow transition transform hover:scale-105 flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    Save Context
+                </button>
+            </div>
+            <p id="saveStatus" class="text-sm text-emerald-600 mt-2 text-right hidden font-semibold">Context saved successfully!</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md p-6 mb-12">
+            <h2 class="text-xl font-bold text-slate-800 mb-2">The Staircase Model</h2>
+            <p class="text-gray-500 mb-6 text-sm">Hover over the steps to see the learning objective.</p>
+            
+            <div class="canvas-container bg-slate-50 rounded-xl border border-gray-200 overflow-hidden">
+                <canvas id="staircaseCanvas" width="1000" height="400" class="w-full h-auto"></canvas>
+            </div>
+            
+            <div id="stepInfo" class="mt-4 p-4 bg-indigo-50 border border-indigo-100 rounded-lg text-indigo-800 min-h-[80px] transition-all duration-300 opacity-0">
+                <h3 class="font-bold text-lg" id="infoTitle">Step Title</h3>
+                <p id="infoDesc">Step description goes here.</p>
+            </div>
+        </div>
+
+        <h2 class="text-2xl font-bold text-slate-900 mb-6">Start Your Journey</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <a href="01_deconstruct.html" class="group block bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-indigo-300 overflow-hidden">
+                <div class="h-2 bg-emerald-400 group-hover:bg-emerald-500"></div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-3xl">🧩</span>
+                        <span class="text-xs font-bold uppercase tracking-wider text-gray-400">Prompts P1–P4</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-indigo-600">Phase 1: Deconstruct</h3>
+                    <p class="text-gray-600 text-sm mb-4">Build the mental model. Break the paper down into summaries, components, pipelines, and flow charts.</p>
+                    <span class="text-emerald-600 font-semibold text-sm flex items-center">
+                        Begin Phase 1 &rarr;
+                    </span>
+                </div>
+            </a>
+
+            <a href="02_evaluate.html" class="group block bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-indigo-300 overflow-hidden">
+                <div class="h-2 bg-amber-400 group-hover:bg-amber-500"></div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-3xl">⚖️</span>
+                        <span class="text-xs font-bold uppercase tracking-wider text-gray-400">Prompts P5–P7</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-indigo-600">Phase 2: Evaluate</h3>
+                    <p class="text-gray-600 text-sm mb-4">Critique the work. Analyze experiments, identify hidden assumptions, and weigh strengths vs. weaknesses.</p>
+                    <span class="text-amber-600 font-semibold text-sm flex items-center">
+                        Begin Phase 2 &rarr;
+                    </span>
+                </div>
+            </a>
+
+            <a href="03_synthesize.html" class="group block bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-indigo-300 overflow-hidden">
+                <div class="h-2 bg-indigo-400 group-hover:bg-indigo-500"></div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-3xl">🚀</span>
+                        <span class="text-xs font-bold uppercase tracking-wider text-gray-400">Prompts P8–P10</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-indigo-600">Phase 3: Synthesize</h3>
+                    <p class="text-gray-600 text-sm mb-4">Create something new. Brainstorm extensions, check feasibility, and generate your report structure.</p>
+                    <span class="text-indigo-600 font-semibold text-sm flex items-center">
+                        Begin Phase 3 &rarr;
+                    </span>
+                </div>
+            </a>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-sm">&copy; 2023 Research Staircase Toolkit. Built for Student-AI Collaboration.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- 1. Global State Management ---
+        document.addEventListener("DOMContentLoaded", () => {
+            // Load saved data if exists
+            const savedTitle = localStorage.getItem('paperTitle');
+            const savedDomain = localStorage.getItem('paperDomain');
+            
+            if (savedTitle) document.getElementById('paperTitle').value = savedTitle;
+            if (savedDomain) document.getElementById('paperDomain').value = savedDomain;
+
+            // Init Canvas
+            initCanvas();
+        });
+
+        function saveContext() {
+            const title = document.getElementById('paperTitle').value;
+            const domain = document.getElementById('paperDomain').value;
+            
+            localStorage.setItem('paperTitle', title);
+            localStorage.setItem('paperDomain', domain);
+            
+            // UI Feedback
+            const status = document.getElementById('saveStatus');
+            status.classList.remove('hidden');
+            setTimeout(() => {
+                status.classList.add('hidden');
+            }, 2000);
+        }
+
+        // --- 2. Canvas Visualization (The Staircase) ---
+        const canvas = document.getElementById('staircaseCanvas');
+        const ctx = canvas.getContext('2d');
+        const infoDiv = document.getElementById('stepInfo');
+        const infoTitle = document.getElementById('infoTitle');
+        const infoDesc = document.getElementById('infoDesc');
+
+        // Data Structure for the Staircase
+        const steps = [
+            { id: "P1", title: "Summary Helper", desc: "Get a plain-English, first-pass understanding.", x: 50, y: 350, color: "#10b981" },
+            { id: "P2", title: "Component Extractor", desc: "Identify problem, setup, methods, and exp.", x: 140, y: 320, color: "#10b981" },
+            { id: "P3", title: "Connection Map", desc: "Draft a dependency graph of components.", x: 230, y: 290, color: "#10b981" },
+            { id: "P4", title: "Pipeline Decomposer", desc: "Turn the method into a clear I/O pipeline.", x: 320, y: 260, color: "#10b981" }, // End Phase 1
+            { id: "P5", title: "Exp. Matrix Builder", desc: "Tabulate experiments, baselines, and metrics.", x: 410, y: 230, color: "#f59e0b" },
+            { id: "P6", title: "Assumption Finder", desc: "Identify explicit and inferred assumptions.", x: 500, y: 200, color: "#f59e0b" },
+            { id: "P7", title: "Critique Helper", desc: "Balance strengths, weaknesses, and questions.", x: 590, y: 170, color: "#f59e0b" }, // End Phase 2
+            { id: "P8", title: "Idea Generator", desc: "Brainstorm extensions by scope and type.", x: 680, y: 140, color: "#6366f1" },
+            { id: "P9", title: "Scope Planner", desc: "Feasibility check for a 4-month timeline.", x: 770, y: 110, color: "#6366f1" },
+            { id: "P10", title: "Report Skeleton", desc: "Generate a research-style report outline.", x: 860, y: 80, color: "#6366f1" }  // End Phase 3
+        ];
+
+        const stepWidth = 80;
+        const stepHeight = 20;
+
+        function drawStaircase(hoveredIndex = -1) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw connecting lines
+            ctx.beginPath();
+            ctx.strokeStyle = "#cbd5e1";
+            ctx.lineWidth = 2;
+            ctx.moveTo(steps[0].x + stepWidth/2, steps[0].y);
+            for(let i=1; i<steps.length; i++) {
+                ctx.lineTo(steps[i].x + stepWidth/2, steps[i].y + stepHeight/2);
+            }
+            ctx.stroke();
+
+            // Draw Steps
+            steps.forEach((step, index) => {
+                const isHovered = index === hoveredIndex;
+                
+                // Shadow
+                ctx.fillStyle = "rgba(0,0,0,0.1)";
+                ctx.fillRect(step.x + 5, step.y + 5, stepWidth, stepHeight);
+
+                // Main Block
+                ctx.fillStyle = isHovered ? "#1e293b" : step.color;
+                ctx.fillRect(step.x, step.y, stepWidth, stepHeight);
+
+                // Text Label
+                ctx.fillStyle = isHovered ? "#ffffff" : "#1e293b";
+                ctx.font = isHovered ? "bold 14px sans-serif" : "bold 12px sans-serif";
+                ctx.fillText(step.id, step.x + 25, step.y - 10);
+                
+                // Vertical riser (visual flair)
+                ctx.fillStyle = "rgba(0,0,0,0.05)";
+                ctx.fillRect(step.x, step.y + stepHeight, stepWidth, canvas.height - step.y);
+            });
+        }
+
+        function initCanvas() {
+            drawStaircase();
+
+            canvas.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+                let found = false;
+
+                // Check collisions with generic "step" areas
+                // Expanded collision box for easier hovering
+                steps.forEach((step, index) => {
+                    if (mouseX >= step.x && mouseX <= step.x + stepWidth &&
+                        mouseY >= step.y - 20 && mouseY <= canvas.height) { // Hitbox extends down
+                        
+                        drawStaircase(index);
+                        updateInfoPanel(index);
+                        canvas.style.cursor = 'pointer';
+                        found = true;
+                    }
+                });
+
+                if (!found) {
+                    drawStaircase(-1);
+                    canvas.style.cursor = 'default';
+                    // Don't hide info panel immediately for better UX, or set to opacity 0
+                }
+            });
+        }
+
+        function updateInfoPanel(index) {
+            infoDiv.style.opacity = '1';
+            infoTitle.innerText = `${steps[index].id}: ${steps[index].title}`;
+            infoDesc.innerText = steps[index].desc;
+            
+            // Match border color to step color
+            infoDiv.className = `mt-4 p-4 border rounded-lg transition-all duration-300 opacity-100`;
+            infoDiv.style.backgroundColor = steps[index].color + '15'; // 15 = low opacity hex
+            infoDiv.style.borderColor = steps[index].color;
+            infoDiv.style.color = '#1e293b';
+        }
+
+    </script>
+</body>
+</html>

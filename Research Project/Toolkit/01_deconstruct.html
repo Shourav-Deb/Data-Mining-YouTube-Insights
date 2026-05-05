@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 1: Deconstruct | Research Staircase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        pre { white-space: pre-wrap; word-wrap: break-word; }
+        /* Custom scrollbar for code blocks */
+        .code-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+        .code-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .code-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-800">
+
+    <nav class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">🧩</span>
+                    <span class="font-bold text-xl tracking-wide">Phase 1: Deconstruct</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="hover:bg-slate-700 text-gray-300 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                        <a href="01_deconstruct.html" class="bg-slate-800 text-white px-3 py-2 rounded-md text-sm font-medium border-b-2 border-indigo-500">Phase 1: Deconstruct</a>
+                        <a href="02_evaluate.html" class="hover:bg-slate-700 text-gray-300 px-3 py-2 rounded-md text-sm font-medium">Phase 2: Evaluate</a>
+                        <a href="03_synthesize.html" class="hover:bg-slate-700 text-gray-300 px-3 py-2 rounded-md text-sm font-medium">Phase 3: Synthesize</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="bg-white border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="text-sm">
+                <span class="text-gray-500">Current Paper:</span>
+                <span id="displayTitle" class="font-bold text-indigo-700 ml-2">Loading...</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" id="toggleNotes" class="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500" onchange="toggleTeacherNotes()">
+                <label for="toggleNotes" class="text-sm text-gray-600 font-medium select-none cursor-pointer">Include Teacher Notes in Copy?</label>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+        <div class="text-center max-w-3xl mx-auto">
+            <h1 class="text-3xl font-extrabold text-slate-900">Build the Mental Model</h1>
+            <p class="text-gray-600 mt-2">
+                Do not rush to critique. Your first goal is to understand the "what" and the "how".
+                Use these 4 prompts to extract the core logic of the paper.
+            </p>
+        </div>
+
+        <section id="p1" class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+            <div class="bg-indigo-50 px-6 py-4 border-b border-indigo-100 flex justify-between items-center">
+                <h2 class="text-lg font-bold text-indigo-900">P1 – High-Level Summary Helper</h2>
+                <button onclick="copyPrompt('p1-code')" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-1.5 rounded-lg text-sm font-bold shadow transition flex items-center">
+                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    Copy P1
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <details class="mb-4 bg-amber-50 border border-amber-200 rounded-lg open:pb-4 transition-all">
+                    <summary class="px-4 py-2 font-semibold text-amber-800 cursor-pointer list-none flex items-center">
+                        <span class="mr-2">👨‍🏫</span> Teacher's Goal (Click to expand)
+                    </summary>
+                    <div class="px-4 text-sm text-amber-900 mt-2">
+                        Get a plain-English, first-pass understanding: problem, why it is non-trivial, main idea, main results.
+                    </div>
+                </details>
+
+                <div class="bg-slate-900 rounded-lg p-4 relative">
+                    <pre id="p1-code" class="text-gray-300 font-mono text-sm code-scroll overflow-x-auto">ROLE AND GOAL
+You are assisting an undergraduate CS student. Your job is to help me build a correct, plain-English understanding of ONE research paper.
+
+PAPER CONTEXT
+Title: <span class="dynamic-title text-indigo-400 font-bold">[Insert Title]</span>
+Authors: &lt;optional&gt;
+I will paste the ABSTRACT and INTRODUCTION of the paper after this message.
+
+STRICT RULES
+- Do NOT invent facts that are not clearly stated in the text I provide.
+- If something is not clearly stated, say “not clearly stated in the text” instead of guessing.
+- Use simple, direct English. Avoid flowery language.
+
+TASKS
+1. Read the abstract + introduction.
+2. Produce:
+   a) A 1–2 paragraph summary in plain English.
+   b) A bullet list with: Problem, Why it is hard, Main idea, What they claim to show.
+3. Add a final section: “Unclear points”.
+
+FINAL FORMAT
+Use headings: “Plain-English Summary”, “Key Points”, “Unclear Points”.</pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="p2" class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+            <div class="bg-indigo-50 px-6 py-4 border-b border-indigo-100 flex justify-between items-center">
+                <h2 class="text-lg font-bold text-indigo-900">P2 – Component Extractor</h2>
+                <button onclick="copyPrompt('p2-code')" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-1.5 rounded-lg text-sm font-bold shadow transition flex items-center">
+                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    Copy P2
+                </button>
+            </div>
+            <div class="p-6">
+                <details class="mb-4 bg-amber-50 border border-amber-200 rounded-lg">
+                    <summary class="px-4 py-2 font-semibold text-amber-800 cursor-pointer list-none flex items-center">
+                        <span class="mr-2">👨‍🏫</span> Teacher's Goal
+                    </summary>
+                    <div class="px-4 text-sm text-amber-900 mt-2 pb-2">
+                        Get the mental model skeleton: problem, formal setup, method modules, experiments, contributions.
+                    </div>
+                </details>
+                <div class="bg-slate-900 rounded-lg p-4 relative">
+                    <pre id="p2-code" class="text-gray-300 font-mono text-sm code-scroll overflow-x-auto">ROLE AND GOAL
+You are assisting an undergraduate CS student to dissect the structure of ONE CS research paper.
+I will paste the TABLE OF CONTENTS or SECTION HEADINGS and possibly some snippets.
+
+STRICT RULES
+- Do NOT guess content that is not supported by the headings/snippets.
+- If something is not clear, write “not clear from provided text”.
+
+TASK
+Identify and describe the main conceptual components (P0: Problem, P1: Setup, P2..: Methods, EXP: Experiments).
+For each component: Give it a short ID and Label, and write 2–3 sentences.
+
+OUTPUT FORMAT
+1) List of Components
+   - ID: &lt;ID&gt;
+     Name: &lt;short name&gt;
+     Section(s): ...
+     Description: ...
+2) Missing/Unclear Components</pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="p3" class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+            <div class="bg-indigo-50 px-6 py-4 border-b border-indigo-100 flex justify-between items-center">
+                <h2 class="text-lg font-bold text-indigo-900">P3 – Connection Map Draft</h2>
+                <button onclick="copyPrompt('p3-code')" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-1.5 rounded-lg text-sm font-bold shadow transition flex items-center">
+                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    Copy P3
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:divide-x divide-gray-200">
+                <div class="p-6 bg-gray-50 flex flex-col">
+                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Target Output Visualizer</h3>
+                    <p class="text-xs text-gray-600 mb-4">Input 3 major concepts from your paper to see how the LLM should connect them.</p>
+                    
+                    <div class="space-y-2 mb-4">
+                        <input type="text" id="node1" placeholder="e.g. Image Dataset" class="w-full text-xs border rounded p-2" oninput="drawGraph()">
+                        <input type="text" id="node2" placeholder="e.g. CNN Encoder" class="w-full text-xs border rounded p-2" oninput="drawGraph()">
+                        <input type="text" id="node3" placeholder="e.g. Classification" class="w-full text-xs border rounded p-2" oninput="drawGraph()">
+                    </div>
+
+                    <canvas id="graphCanvas" width="350" height="200" class="w-full bg-white rounded border border-gray-200 shadow-sm"></canvas>
+                </div>
+
+                <div class="p-6">
+                    <details class="mb-4 bg-amber-50 border border-amber-200 rounded-lg">
+                        <summary class="px-4 py-2 font-semibold text-amber-800 cursor-pointer list-none flex items-center">
+                            <span class="mr-2">👨‍🏫</span> Teacher's Goal
+                        </summary>
+                        <div class="px-4 text-sm text-amber-900 mt-2 pb-2">
+                            Turn the list of components into a dependency / flow graph (who depends on whom).
+                        </div>
+                    </details>
+                    <div class="bg-slate-900 rounded-lg p-4 relative">
+                        <pre id="p3-code" class="text-gray-300 font-mono text-sm code-scroll overflow-x-auto">ROLE AND GOAL
+You are assisting an undergraduate CS student to understand how the main components of a paper depend on each other.
+
+INPUT
+I will paste a list of components (IDs, names, and short descriptions).
+
+TASK
+For EACH component:
+1. Identify which earlier components it logically depends on.
+2. Identify which later components use it.
+
+OUTPUT FORMAT
+- ID: &lt;ID&gt;
+  Depends on: [list of IDs]
+  Used by: [list of IDs]
+  Short note: 1–2 sentences explaining the dependency.
+
+Final Section: "Potential Graph Structure"
+List directed edges: &lt;FROM_ID&gt; -> &lt;TO_ID&gt;</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="p4" class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+            <div class="bg-indigo-50 px-6 py-4 border-b border-indigo-100 flex justify-between items-center">
+                <h2 class="text-lg font-bold text-indigo-900">P4 – Method Pipeline Decomposer</h2>
+                <button onclick="copyPrompt('p4-code')" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-1.5 rounded-lg text-sm font-bold shadow transition flex items-center">
+                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    Copy P4
+                </button>
+            </div>
+            <div class="p-6">
+                <details class="mb-4 bg-amber-50 border border-amber-200 rounded-lg">
+                    <summary class="px-4 py-2 font-semibold text-amber-800 cursor-pointer list-none flex items-center">
+                        <span class="mr-2">👨‍🏫</span> Teacher's Goal
+                    </summary>
+                    <div class="px-4 text-sm text-amber-900 mt-2 pb-2">
+                        Turn the method into a clean input → step → output pipeline + key design choices.
+                    </div>
+                </details>
+                <div class="bg-slate-900 rounded-lg p-4 relative">
+                    <pre id="p4-code" class="text-gray-300 font-mono text-sm code-scroll overflow-x-auto">ROLE AND GOAL
+You are assisting an undergraduate CS student to understand the METHOD section of ONE CS paper as a clear pipeline.
+
+INPUT
+I will paste the method / algorithm section.
+
+TASKS
+1. Pipeline Extraction (Input -> Step 1 -> Step 2 -> Output)
+   For each step specify: Step name, Inputs, Operation, Outputs.
+2. Key Design Choices / Hyperparameters
+   Extract main hyperparameters and design choices.
+
+OUTPUT FORMAT
+A. “Method Pipeline (Draft)”
+B. “Key Design Choices and Hyperparameters”
+C. “Unclear or Vague Parts”</pre>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-800 text-white px-4 py-2 rounded-lg shadow-lg transform translate-y-20 transition-transform duration-300 flex items-center">
+        <svg class="w-5 h-5 text-emerald-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        Copied to clipboard!
+    </div>
+
+    <script>
+        // --- 1. Dynamic Content Injection ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTitle = localStorage.getItem('paperTitle') || "Your Paper Title Here";
+            
+            // Update Top Bar
+            document.getElementById('displayTitle').textContent = savedTitle;
+            
+            // Update Prompts
+            document.querySelectorAll('.dynamic-title').forEach(el => {
+                el.textContent = savedTitle;
+            });
+
+            // Initialize Graph
+            drawGraph();
+        });
+
+        // --- 2. Copy Logic ---
+        function toggleTeacherNotes() {
+            // This function is a placeholder for visual state management.
+            // The actual copy logic reads the checkbox state.
+            console.log("Teacher notes toggle changed.");
+        }
+
+        function copyPrompt(elementId) {
+            const includeNotes = document.getElementById('toggleNotes').checked;
+            const originalPre = document.getElementById(elementId);
+            
+            // Clone the element to manipulate text without changing UI
+            const clone = originalPre.cloneNode(true);
+            
+            // Get text content
+            let textToCopy = clone.innerText;
+
+            // In this specific implementation, Teacher Notes are separate DOM elements 
+            // (<details>) OUTSIDE the <pre> block. 
+            // However, if we wanted to prepend the teacher note to the clipboard:
+            if (includeNotes) {
+                // Find the teacher note related to this section (parent traversal)
+                const section = originalPre.closest('section');
+                const note = section.querySelector('details .text-amber-900');
+                if (note) {
+                    textToCopy = `[TEACHER NOTE: ${note.innerText.trim()}]\n\n${textToCopy}`;
+                }
+            }
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast();
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-20');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20');
+            }, 2000);
+        }
+
+        // --- 3. P3 Graph Simulator ---
+        function drawGraph() {
+            const canvas = document.getElementById('graphCanvas');
+            if (!canvas.getContext) return;
+            const ctx = canvas.getContext('2d');
+            
+            // Inputs
+            const n1 = document.getElementById('node1').value || "Problem";
+            const n2 = document.getElementById('node2').value || "Method";
+            const n3 = document.getElementById('node3').value || "Result";
+
+            // Clear
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Coords
+            const nodes = [
+                { x: 50, y: 100, text: n1, color: '#e0e7ff' }, // Indigo-100
+                { x: 175, y: 100, text: n2, color: '#dbeafe' }, // Blue-100
+                { x: 300, y: 100, text: n3, color: '#d1fae5' }  // Emerald-100
+            ];
+
+            // Draw Arrows First
+            ctx.strokeStyle = "#94a3b8";
+            ctx.lineWidth = 2;
+            
+            // Arrow 1->2
+            drawArrow(ctx, nodes[0].x + 30, nodes[0].y, nodes[1].x - 30, nodes[1].y);
+            // Arrow 2->3
+            drawArrow(ctx, nodes[1].x + 30, nodes[1].y, nodes[2].x - 30, nodes[2].y);
+
+            // Draw Nodes
+            nodes.forEach(node => {
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, 35, 0, 2 * Math.PI);
+                ctx.fillStyle = node.color;
+                ctx.fill();
+                ctx.strokeStyle = "#64748b";
+                ctx.stroke();
+
+                // Text
+                ctx.fillStyle = "#1e293b";
+                ctx.font = "bold 10px sans-serif";
+                ctx.textAlign = "center";
+                // Simple text wrapping or truncation
+                const display = node.text.length > 8 ? node.text.substring(0,8)+".." : node.text;
+                ctx.fillText(display, node.x, node.y + 4);
+            });
+        }
+
+        function drawArrow(ctx, fromX, fromY, toX, toY) {
+            const headlen = 10;
+            const dx = toX - fromX;
+            const dy = toY - fromY;
+            const angle = Math.atan2(dy, dx);
+            
+            ctx.beginPath();
+            ctx.moveTo(fromX, fromY);
+            ctx.lineTo(toX, toY);
+            ctx.lineTo(toX - headlen * Math.cos(angle - Math.PI / 6), toY - headlen * Math.sin(angle - Math.PI / 6));
+            ctx.moveTo(toX, toY);
+            ctx.lineTo(toX - headlen * Math.cos(angle + Math.PI / 6), toY - headlen * Math.sin(angle + Math.PI / 6));
+            ctx.stroke();
+        }
+
+    </script>
+</body>
+</html>

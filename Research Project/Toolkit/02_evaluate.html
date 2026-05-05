@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 2: Evaluate | Research Staircase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        pre { white-space: pre-wrap; word-wrap: break-word; }
+        .code-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+        .code-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .code-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+        
+        /* Slider Styling */
+        input[type=range] {
+            -webkit-appearance: none; 
+            background: transparent; 
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #4f46e5;
+            cursor: pointer;
+            margin-top: -8px; 
+            box-shadow: 0 0 2px rgba(0,0,0,0.5);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-800">
+
+    <nav class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">⚖️</span>
+                    <span class="font-bold text-xl tracking-wide">Phase 2: Evaluate</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="hover:bg-slate-700 text-gray-300 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                        <a href="01_deconstruct.html" class="hover:bg-slate-700 text-gray-300 px-3 py-2 rounded-md text-sm font-medium">Phase 1: Deconstruct</a>
+                        <a href="02_evaluate.html" class="bg-slate-800 text-white px-3 py-2 rounded-md text-sm font-medium border-b-2 border-amber-500">Phase 2: Evaluate</a>
+                        <a href="03_synthesize.html" class="hover:bg-slate-700 text-gray-300 px-3 py-2 rounded-md text-sm font-medium">Phase 3: Synthesize</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="bg-white border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="text-sm">
+                <span class="text-gray-500">Current Paper:</span>
+                <span id="displayTitle" class="font-bold text-amber-700 ml-2">Loading...</span>
+            </div>
+            <div class="text-xs text-gray-400 font-mono">
+                P5 • P6 • P7
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+        <div class="text-center max-w-3xl mx-auto">
+            <h1 class="text-3xl font-extrabold text-slate-900">Critique & Analyze</h1>
+            <p class="text-gray-600 mt-2">
+                Now that you understand the paper, it's time to question it. 
+                Focus on experimental rigor, hidden assumptions, and fair comparisons.
+            </p>
+        </div>
+
+        <section id="p5" class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+            <div class="bg-amber-50 px-6 py-4 border-b border-amber-100 flex justify-between items-center">
+                <h2 class="text-lg font-bold text-amber-900">P5 – Experiment Matrix Builder</h2>
+                <button onclick="copyPrompt('p5-code')" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-1.5 rounded-lg text-sm font-bold shadow transition flex items-center">
+                    Copy P5
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-0 xl:divide-x divide-gray-200">
+                
+                <div class="p-6 bg-gray-50">
+                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Matrix Simulator</h3>
+                    <p class="text-xs text-gray-600 mb-4">Add a row to understand what data the LLM needs to extract.</p>
+                    
+                    <div class="flex space-x-2 mb-2">
+                        <input type="text" id="exID" placeholder="ID (E1)" class="w-1/6 text-xs border rounded p-2">
+                        <input type="text" id="exDataset" placeholder="Dataset (CIFAR)" class="w-1/4 text-xs border rounded p-2">
+                        <input type="text" id="exMetric" placeholder="Metric (Acc)" class="w-1/4 text-xs border rounded p-2">
+                        <button onclick="addRow()" class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3 rounded flex-grow">Add Row</button>
+                    </div>
+
+                    <div class="bg-white border rounded shadow-sm overflow-hidden min-h-[150px]">
+                        <table class="w-full text-xs text-left">
+                            <thead class="bg-gray-100 text-gray-600 font-medium border-b">
+                                <tr>
+                                    <th class="p-2">ID</th>
+                                    <th class="p-2">Dataset</th>
+                                    <th class="p-2">Metric</th>
+                                    <th class="p-2">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="matrixBody">
+                                <tr class="text-gray-400 italic">
+                                    <td class="p-2" colspan="4">No data added yet...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <details class="mb-4 bg-amber-50 border border-amber-200 rounded-lg">
+                        <summary class="px-4 py-2 font-semibold text-amber-800 cursor-pointer list-none flex items-center">
+                            <span class="mr-2">👨‍🏫</span> Teacher's Goal
+                        </summary>
+                        <div class="px-4 text-sm text-amber-900 mt-2 pb-2">
+                            Force them to understand what was tested, on what, against whom, with what metric.
+                        </div>
+                    </details>
+                    <div class="bg-slate-900 rounded-lg p-4 relative">
+                        <pre id="p5-code" class="text-gray-300 font-mono text-sm code-scroll overflow-x-auto">ROLE AND GOAL
+You are assisting an undergraduate CS student to decode the EXPERIMENTS section of ONE CS research paper.
+
+INPUT
+I will paste the experiments/evaluation section.
+
+TASK
+Build an EXPERIMENT MATRIX.
+Columns: Experiment_ID, Goal, Dataset(s), Model/Variant, Baselines, Metrics, Key result.
+
+OUTPUT FORMAT
+1) “Experiment Matrix (Draft)”
+   - Experiment_ID: E1
+     Goal: ...
+     Dataset(s): ...
+     Model/Variant: ...
+     Baselines: ...
+     Metrics: ...
+     Key result: ...
+
+2) “Most Important Experiments”
+3) “Missing/Unclear Details”</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="p6" class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+            <div class="bg-amber-50 px-6 py-4 border-b border-amber-100 flex justify-between items-center">
+                <h2 class="text-lg font-bold text-amber-900">P6 – Assumption & Limitation Finder</h2>
+                <button onclick="copyPrompt('p6-code')" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-1.5 rounded-lg text-sm font-bold shadow transition flex items-center">
+                    Copy P6
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="bg-slate-900 rounded-lg p-4 relative">
+                    <pre id="p6-code" class="text-gray-300 font-mono text-sm code-scroll overflow-x-auto">ROLE AND GOAL
+You are assisting an undergraduate CS student to identify ASSUMPTIONS and LIMITATIONS in ONE CS research paper.
+
+INPUT
+I will paste parts of the INTRODUCTION, PROBLEM FORMULATION, and DISCUSSION.
+
+TASKS
+1. Explicit Assumptions (stated in text).
+2. Inferred Assumptions (implied by design).
+3. Limitations and Open Problems.
+
+OUTPUT FORMAT
+A. “Explicit Assumptions”
+B. “Inferred Assumptions”
+C. “Limitations and Open Problems”
+D. “Items for Human Check”</pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="p7" class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 ring-2 ring-indigo-50">
+            <div class="bg-indigo-600 px-6 py-4 border-b border-indigo-700 flex justify-between items-center text-white">
+                <h2 class="text-lg font-bold">P7 – Structured Critique Helper</h2>
+                <button onclick="copyPrompt('p7-code')" class="bg-white text-indigo-700 hover:bg-gray-100 px-4 py-1.5 rounded-lg text-sm font-bold shadow transition flex items-center">
+                    Copy P7
+                </button>
+            </div>
+            
+            <div class="p-6">
+                
+                <div class="mb-6 bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="font-bold text-gray-700 text-sm uppercase tracking-wide">Critique Tone:</label>
+                        <span id="toneLabel" class="text-sm font-bold text-indigo-600">Balanced (Default)</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" id="toneSlider">
+                    <div class="flex justify-between text-xs text-gray-400 mt-2">
+                        <span>Harsh / Reviewer 2</span>
+                        <span>Balanced</span>
+                        <span>Optimistic / Fanboy</span>
+                    </div>
+                </div>
+
+                <details class="mb-4 bg-amber-50 border border-amber-200 rounded-lg">
+                    <summary class="px-4 py-2 font-semibold text-amber-800 cursor-pointer list-none flex items-center">
+                        <span class="mr-2">👨‍🏫</span> Teacher's Goal
+                    </summary>
+                    <div class="px-4 text-sm text-amber-900 mt-2 pb-2">
+                        Help them write a balanced critique: strengths, weaknesses, questions.
+                    </div>
+                </details>
+
+                <div class="bg-slate-900 rounded-lg p-4 relative transition-all duration-300">
+                    <pre id="p7-code" class="text-gray-300 font-mono text-sm code-scroll overflow-x-auto">ROLE AND GOAL
+You are assisting an undergraduate CS student to prepare a STRUCTURED CRITIQUE of ONE CS paper.
+
+INPUT
+I will give you: Summary, Method Pipeline, Experiment Matrix, Assumptions.
+
+STRICT RULES
+<span id="p7-rules" class="text-amber-300">- Do NOT assume the method is good or bad by default.
+- Base every “strength” or “weakness” on the concrete information I provide.</span>
+
+TASK
+Organize a critique into these parts:
+1. Strengths (Methodological, Experimental)
+2. Weaknesses / Risks (Assumptions, missing metrics)
+3. Questions / “What if” Scenarios
+
+OUTPUT FORMAT
+A. “Strengths”
+B. “Weaknesses / Risks”
+C. “Questions and What-Ifs”
+D. “Items Requiring Human Judgment”</pre>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTitle = localStorage.getItem('paperTitle') || "Your Paper Title Here";
+            document.getElementById('displayTitle').textContent = savedTitle;
+        });
+
+        // --- P5 Matrix Logic ---
+        let firstRowAdded = false;
+
+        function addRow() {
+            const id = document.getElementById('exID').value || "E?";
+            const data = document.getElementById('exDataset').value || "Unknown";
+            const metric = document.getElementById('exMetric').value || "N/A";
+            const tbody = document.getElementById('matrixBody');
+
+            if (!firstRowAdded) {
+                tbody.innerHTML = ""; // Clear placeholder
+                firstRowAdded = true;
+            }
+
+            const tr = document.createElement('tr');
+            tr.className = "border-b hover:bg-gray-50 transition";
+            tr.innerHTML = `
+                <td class="p-2 font-mono text-indigo-600">${id}</td>
+                <td class="p-2">${data}</td>
+                <td class="p-2">${metric}</td>
+                <td class="p-2 text-emerald-500 font-bold">✓</td>
+            `;
+            tbody.appendChild(tr);
+
+            // Clear inputs
+            document.getElementById('exID').value = "";
+            document.getElementById('exDataset').value = "";
+            document.getElementById('exMetric').value = "";
+        }
+
+        // --- P7 Slider Logic ---
+        const slider = document.getElementById('toneSlider');
+        const rulesSpan = document.getElementById('p7-rules');
+        const toneLabel = document.getElementById('toneLabel');
+
+        const rulesMap = {
+            harsh: `- BE CRITICAL. Assume the role of "Reviewer 2".
+- Aggressively look for weak baselines, unfair comparisons, or vague definitions.
+- If a claim is not supported by strong evidence, highlight it as a major flaw.`,
+            balanced: `- Do NOT assume the method is good or bad by default.
+- Base every “strength” or “weakness” on the concrete information I provide.
+- If something is not clear, mark it as “unclear – needs human judgment”.`,
+            optimistic: `- Focus on the NOVELTY and potential value.
+- Be generous with "Strengths". Look for what they did right.
+- Treat weaknesses as "Opportunities for Future Work" rather than fatal flaws.`
+        };
+
+        slider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            
+            if (val < 35) {
+                // Harsh
+                toneLabel.textContent = "Critical / Reviewer 2 Mode";
+                toneLabel.className = "text-sm font-bold text-red-500";
+                rulesSpan.textContent = rulesMap.harsh;
+                rulesSpan.className = "text-red-300 font-bold";
+            } else if (val > 65) {
+                // Optimistic
+                toneLabel.textContent = "Optimistic / Fanboy Mode";
+                toneLabel.className = "text-sm font-bold text-emerald-500";
+                rulesSpan.textContent = rulesMap.optimistic;
+                rulesSpan.className = "text-emerald-300 font-bold";
+            } else {
+                // Balanced
+                toneLabel.textContent = "Balanced (Default)";
+                toneLabel.className = "text-sm font-bold text-indigo-600";
+                rulesSpan.textContent = rulesMap.balanced;
+                rulesSpan.className = "text-amber-300";
+            }
+        });
+
+        // --- Copy Function ---
+        function copyPrompt(elementId) {
+            const originalPre = document.getElementById(elementId);
+            navigator.clipboard.writeText(originalPre.innerText).then(() => {
+                alert("Copied to clipboard!");
+            });
+        }
+    </script>
+</body>
+</html>
